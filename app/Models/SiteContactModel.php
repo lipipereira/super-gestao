@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SiteContactModel extends Model
 {
     use HasFactory;
+
+    protected $table = 'site_contact_models';
 }
