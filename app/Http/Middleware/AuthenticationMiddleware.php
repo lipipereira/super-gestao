@@ -15,19 +15,11 @@ class AuthenticationMiddleware
      */
     public function handle(Request $request, Closure $next, $authenticantion, $profile): Response
     {
-        echo $authenticantion.' - '.$profile.'<br>';
-        if ($authenticantion == 'default') {
-            echo 'verifica o usuario e senha do banco de dados '.$profile.'<br>';
-        }
-
-        if ($authenticantion == 'ldap') {
-            echo 'Verificar o usuario e senha do AD '.$profile.'<br>';
-        }
-
-        if (false){
+        session_start();
+        if (isset($_SESSION['email']) && $_SESSION['email'] != ''){
             return $next($request);
         }else{
-            return Response('Acesso negado! Rota exige que seja autenticado');
+            return redirect()->route('main.login',['erro'=>2]);
         }
     }
 }

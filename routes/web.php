@@ -4,6 +4,7 @@ use App\Http\Controllers\{
     AboutController,
     ContactController,
     CustomerController,
+    LoginController,
     MainController,
     ProductController,
     SupplierController
@@ -28,7 +29,8 @@ Route::get('/about', [AboutController::class,'index'])->name('main.about');
 Route::get('/contact', [ContactController::class,'index'])->name('main.contact');
 Route::post('/contact', [ContactController::class,'create'])->name('main.contact');
 
-Route::get('/login', function(){ return 'Login'; })->name('main.login');
+Route::get('/login/{erro?}', [LoginController::class,'index'])->name('main.login');
+Route::post('/login', [LoginController::class,'authetication'])->name('main.login');
 Route::middleware('authetication:default,profile')
     ->prefix('app')
     ->group(function(){
