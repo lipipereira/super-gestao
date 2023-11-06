@@ -10,4 +10,11 @@ class SiteContactModel extends Model
     use HasFactory;
 
     protected $table = 'site_contact_models';
+    protected $fillable = [
+        'nome',
+        'telefone',
+        'email',
+        'motivo_contato',
+        'mensagem'
+    ];
 }
