@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             SupplierSeeder::class,
-            SiteContactSeeder::class
+            SiteContactSeeder::class,
+            ReasonContactSeeder::class
         ]);
     }
 }

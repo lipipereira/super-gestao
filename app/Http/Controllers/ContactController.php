@@ -2,24 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ReasonContact;
 use Illuminate\Http\Request;
+use App\Models\SiteContactModel;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('site.contact',['title'=>'Contato']);
+        $motivo_contatos = ReasonContact::all();
+
+        return view('site.contact',['title'=>'Contato','motivo_contatos'=>$motivo_contatos]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'nome'=>'required|min:3|max:40',
+            'telefone'=>'required',
+            'email'=>'email',
+            'motivo_contatos_id'=>'required',
+            'mensagem'=>'required'
+        ],
+        [
+            'nome.min' => 'O campo "nome" precisa ter no minino 3 caracteres',
+            'nome.max' => 'O campo "nome" pode ter no máximo 40 caracteres',
+            'email.email' => 'O campo "e-mail" dever ser válido',
+
+            'required' => 'O campo :attribute precisa ser preenchido'
+        ]);
+        SiteContactModel::create($request->all());
+        return redirect()->route('main.index');
     }
 
     /**

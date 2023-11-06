@@ -5,17 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SiteContactModel extends Model
+class ReasonContact extends Model
 {
     use HasFactory;
 
-    protected $table = 'site_contact_models';
-
+    protected $table = 'motivos_contato';
     protected $fillable = [
-        'nome',
-        'telefone',
-        'email',
-        'motivo_contatos_id',
-        'mensagem'
+        'motivo_contato'
     ];
 }
