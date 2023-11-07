@@ -38,8 +38,11 @@ Route::middleware('authetication:default,profile')
     Route::get('/home',[HomeController::class,'index'])->name('app.home');
     Route::get('/logout',[LoginController::class,'logout'])->name('app.logout');
     Route::get('/customer',[CustomerController::class,'index'])->name('app.customer');
-    Route::get('/supplier',[SupplierController::class,'index'])->name('app.supplier');
     Route::get('/product',[ProductController::class,'index'])->name('app.product');
+
+    Route::get('/supplier',[SupplierController::class,'index'])->name('app.supplier');
+    Route::post('/supplier/show',[SupplierController::class,'show'])->name('app.supplier.show');
+    Route::get('/supplier/store',[SupplierController::class,'store'])->name('app.supplier.store');
 });
 
 Route::fallback(function(){
