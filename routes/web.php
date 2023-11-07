@@ -4,6 +4,7 @@ use App\Http\Controllers\{
     AboutController,
     ContactController,
     CustomerController,
+    HomeController,
     LoginController,
     MainController,
     ProductController,
@@ -32,20 +33,16 @@ Route::post('/contact', [ContactController::class,'create'])->name('main.contact
 Route::get('/login/{erro?}', [LoginController::class,'index'])->name('main.login');
 Route::post('/login', [LoginController::class,'authetication'])->name('main.login');
 Route::middleware('authetication:default,profile')
-    ->prefix('app')
-    ->group(function(){
+    ->prefix('app')->group(function(){
 
-    Route::get('/customers',[CustomerController::class,'index'])
-        ->name('app.customers');
-
-    Route::get('/suppliers',[SupplierController::class,'index'])
-        ->name('app.suppliers');
-
-    Route::get('/products',[ProductController::class,'index'])
-        ->name('app.products');
+    Route::get('/home',[HomeController::class,'index'])->name('app.home');
+    Route::get('/logout',[LoginController::class,'logout'])->name('app.logout');
+    Route::get('/customer',[CustomerController::class,'index'])->name('app.customer');
+    Route::get('/supplier',[SupplierController::class,'index'])->name('app.supplier');
+    Route::get('/product',[ProductController::class,'index'])->name('app.product');
 });
 
 Route::fallback(function(){
-    echo 'Pagina indisponivel';
+    echo 'Pagina indisponível';
     echo ' <a href="'.route('main.index').'">Voltar</a>';
 });

@@ -20,7 +20,7 @@ class LoginController extends Controller
         }
 
         if ($request->get('erro') == 2){
-            $erro = 'Necessario realiza login para ter acesso a pagina';
+            $erro = 'Necessário realiza login para ter acesso a página';
         }
 
         return view('site.login',['title'=>'Login','erro'=>$erro]);
@@ -53,11 +53,17 @@ class LoginController extends Controller
             session_start();
             $_SESSION['name'] = $existe->name;
             $_SESSION['email'] = $existe->email;
-            return redirect()->route('app.customers');
+            return redirect()->route('app.customer');
         }else{
             return redirect()->route('main.login',['erro'=> 1]);
         }
 
-
     }
+
+    public function logout()
+    {
+        session_destroy();
+        return redirect()->route('main.login');
+    }
+
 }
