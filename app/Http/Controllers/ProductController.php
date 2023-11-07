@@ -15,7 +15,7 @@ class ProductController extends Controller
     {
         $product = Product::paginate(10);
 
-        return view('app.product.index',[
+        return view('app.product.index', [
             'produtos' => $product,
             'request' => $request->all()
         ]);
@@ -27,9 +27,7 @@ class ProductController extends Controller
     public function create()
     {
         $units = Unit::all();
-        return view('app.product.create',[
-            'unidades' => $units
-        ]);
+        return view('app.product.create', ['unidades' => $units]);
     }
 
     /**
@@ -65,7 +63,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('app.product.show',[
+        return view('app.product.show', [
             'produto' => $product
         ]);
     }
@@ -76,8 +74,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $units = Unit::all();
-        //return view('app.product.edit',['produto' => $product, 'unidades' => $units]);
-        return view('app.product.create',['produto' => $product, 'unidades' => $units]);
+        return view('app.product.edit', ['produto' => $product, 'unidades' => $units]);
+        //return view('app.product.create',['produto' => $product, 'unidades' => $units]);
     }
 
     /**
@@ -86,7 +84,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $product->update($request->all());
-        return redirect()->route('product.show',['product' => $product->id]);
+        return redirect()->route('product.show', ['product' => $product->id]);
     }
 
     /**
