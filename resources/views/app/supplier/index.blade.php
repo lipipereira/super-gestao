@@ -9,7 +9,7 @@
         <div class="menu">
             <ul>
                 <li><a href="{{ route('app.supplier.store') }}">Novo</a></li>
-                <li><a href="{{ route('app.supplier.show') }}">Consulta</a></li>
+                <li><a href="{{ route('app.supplier') }}">Consulta</a></li>
             </ul>
         </div>
 

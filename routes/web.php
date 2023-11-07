@@ -38,14 +38,21 @@ Route::middleware('authetication:default,profile')
     Route::get('/home',[HomeController::class,'index'])->name('app.home');
     Route::get('/logout',[LoginController::class,'logout'])->name('app.logout');
     Route::get('/customer',[CustomerController::class,'index'])->name('app.customer');
-    Route::get('/product',[ProductController::class,'index'])->name('app.product');
 
+    // Fornecedores
     Route::get('/supplier',[SupplierController::class,'index'])->name('app.supplier');
+    Route::get('/supplier/show',[SupplierController::class,'show'])->name('app.supplier.show');
     Route::post('/supplier/show',[SupplierController::class,'show'])->name('app.supplier.show');
     Route::get('/supplier/store',[SupplierController::class,'store'])->name('app.supplier.store');
+    Route::post('/supplier/store',[SupplierController::class,'store'])->name('app.supplier.store');
+    Route::get('/supplier/edit/{id}/{msg?}',[SupplierController::class,'edit'])->name('app.supplier.edit');
+    Route::get('/supplier/destroy/{id}',[SupplierController::class,'destroy'])->name('app.supplier.destroy');
+
+    // Produtos
+    Route::resource('/product',ProductController::class);
 });
 
 Route::fallback(function(){
-    echo 'Pagina indisponível';
+    echo 'Página indisponível';
     echo ' <a href="'.route('main.index').'">Voltar</a>';
 });
