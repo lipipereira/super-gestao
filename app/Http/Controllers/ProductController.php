@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function create()
     {
         $units = Unit::all();
-        return view('app.product.create', ['unidades' => $units]);
+        return view('app.product.create', ['units' => $units]);
     }
 
     /**

@@ -25,34 +25,34 @@ Route::middleware('log.acesso')
     ->name('main.index');
 */
 
-Route::get('/', [MainController::class,'index'])->name('main.index');
-Route::get('/about', [AboutController::class,'index'])->name('main.about');
-Route::get('/contact', [ContactController::class,'index'])->name('main.contact');
-Route::post('/contact', [ContactController::class,'create'])->name('main.contact');
+Route::get('/', [MainController::class, 'index'])->name('main.index');
+Route::get('/about', [AboutController::class, 'index'])->name('main.about');
+Route::get('/contact', [ContactController::class, 'index'])->name('main.contact');
+Route::post('/contact', [ContactController::class, 'create'])->name('main.contact');
 
-Route::get('/login/{erro?}', [LoginController::class,'index'])->name('main.login');
-Route::post('/login', [LoginController::class,'authetication'])->name('main.login');
+Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('main.login');
+Route::post('/login', [LoginController::class, 'authetication'])->name('main.login');
 Route::middleware('authetication:default,profile')
-    ->prefix('app')->group(function(){
+    ->prefix('app')->group(function () {
 
-    Route::get('/home',[HomeController::class,'index'])->name('app.home');
-    Route::get('/logout',[LoginController::class,'logout'])->name('app.logout');
-    Route::get('/customer',[CustomerController::class,'index'])->name('app.customer');
+        Route::get('/home', [HomeController::class, 'index'])->name('app.home');
+        Route::get('/logout', [LoginController::class, 'logout'])->name('app.logout');
+        Route::get('/customer', [CustomerController::class, 'index'])->name('app.customer');
 
-    // Fornecedores
-    Route::get('/supplier',[SupplierController::class,'index'])->name('app.supplier');
-    Route::get('/supplier/show',[SupplierController::class,'show'])->name('app.supplier.show');
-    Route::post('/supplier/show',[SupplierController::class,'show'])->name('app.supplier.show');
-    Route::get('/supplier/store',[SupplierController::class,'store'])->name('app.supplier.store');
-    Route::post('/supplier/store',[SupplierController::class,'store'])->name('app.supplier.store');
-    Route::get('/supplier/edit/{id}/{msg?}',[SupplierController::class,'edit'])->name('app.supplier.edit');
-    Route::get('/supplier/destroy/{id}',[SupplierController::class,'destroy'])->name('app.supplier.destroy');
+        // Fornecedores
+        Route::get('/supplier', [SupplierController::class, 'index'])->name('app.supplier');
+        Route::get('/supplier/show', [SupplierController::class, 'show'])->name('app.supplier.show');
+        Route::post('/supplier/show', [SupplierController::class, 'show'])->name('app.supplier.show');
+        Route::get('/supplier/store', [SupplierController::class, 'store'])->name('app.supplier.store');
+        Route::post('/supplier/store', [SupplierController::class, 'store'])->name('app.supplier.store');
+        Route::get('/supplier/edit/{id}/{msg?}', [SupplierController::class, 'edit'])->name('app.supplier.edit');
+        Route::get('/supplier/destroy/{id}', [SupplierController::class, 'destroy'])->name('app.supplier.destroy');
 
-    // Produtos
-    Route::resource('/product',ProductController::class);
-});
+        // Produtos
+        Route::resource('/product', ProductController::class);
+    });
 
-Route::fallback(function(){
+Route::fallback(function () {
     echo 'Página indisponível';
-    echo ' <a href="'.route('main.index').'">Voltar</a>';
+    echo ' <a href="' . route('main.index') . '">Voltar</a>';
 });
