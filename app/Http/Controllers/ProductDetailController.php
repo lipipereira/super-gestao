@@ -68,7 +68,7 @@ class ProductDetailController extends Controller
      */
     public function edit($id)
     {
-        $productDetail = ItemDetail::find($id);
+        $productDetail = ItemDetail::with(['product'])->find($id);
         $units = Unit::all();
         return view('app.product_detail.edit', [
             'productDetail' => $productDetail,

@@ -15,7 +15,13 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         //$products = Product::paginate(10);
-        $products = Item::paginate(10);
+
+        // Lazy Loading - Carregamento Preguiçoso
+        //$products = Item::paginate(10);
+
+        // Eager Loading - Carregamento Apressado
+        $products = Item::with(['productDetail'])->paginate(10);
+
         /*
         foreach ($products as $key => $product) {
             $productDetail = ProductDetail::where('produto_id', $product->id)->first();
