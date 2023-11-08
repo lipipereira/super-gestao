@@ -8,6 +8,7 @@ use App\Http\Controllers\{
     LoginController,
     MainController,
     ProductController,
+    ProductDetailController,
     SupplierController
 };
 
@@ -50,6 +51,9 @@ Route::middleware('authetication:default,profile')
 
         // Produtos
         Route::resource('/product', ProductController::class);
+
+        // Produtos detalhes
+        Route::resource('/product-detail', ProductDetailController::class);
     });
 
 Route::fallback(function () {

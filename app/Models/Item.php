@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Item extends Model
 {
     use HasFactory;
 
@@ -20,6 +20,6 @@ class Product extends Model
 
     public function productDetail()
     {
-        return $this->hasOne('App\Models\ProductDetail');
+        return $this->hasOne('App\Models\ItemDetail', 'produto_id', 'id');
     }
 }
