@@ -14,13 +14,13 @@ class SupplierController extends Controller
 
     public function show(Request $request)
     {
-        $supplier = SupplierModel::where('nome','like','%'.$request->input('nome').'%')
-            ->where('site','like','%'.$request->input('site').'%')
-            ->where('uf','like','%'.$request->input('uf').'%')
-            ->where('email','like','%'.$request->input('email').'%')
-            ->paginate(2);
+        $supplier = SupplierModel::with(['products'])->where('nome', 'like', '%' . $request->input('nome') . '%')
+            ->where('site', 'like', '%' . $request->input('site') . '%')
+            ->where('uf', 'like', '%' . $request->input('uf') . '%')
+            ->where('email', 'like', '%' . $request->input('email') . '%')
+            ->paginate(10);
 
-        return view('app.supplier.show',[
+        return view('app.supplier.show', [
             'fornecedores' => $supplier,
             'request' => $request->all()
         ]);
@@ -30,7 +30,7 @@ class SupplierController extends Controller
     {
         $mensagem = '';
         //Inserir
-        if ($request->input('_token') != '' && $request->input('id') == '' ){
+        if ($request->input('_token') != '' && $request->input('id') == '') {
             $regras = [
                 'nome' => 'required|min:3|max:40',
                 'site' => 'required',
@@ -53,26 +53,27 @@ class SupplierController extends Controller
         }
 
         //edição
-        if ($request->input('_token') != '' && $request->input('id') != '' ){
+        if ($request->input('_token') != '' && $request->input('id') != '') {
             $supplier =  SupplierModel::find($request->input('id'));
             $update = $supplier->update($request->all());
-            if ($update){
+            if ($update) {
                 $mensagem = 'Atualização realizado com sucesso!';
-            }else{
+            } else {
                 $mensagem = 'Erro ao realizado atualização';
             }
-            return redirect()->route('app.supplier.edit',[
+            return redirect()->route('app.supplier.edit', [
                 'id' => $request->input('id'),
-                'msg' => $mensagem]);
+                'msg' => $mensagem
+            ]);
         }
 
-        return view('app.supplier.store',['msg' => $mensagem]);
+        return view('app.supplier.store', ['msg' => $mensagem]);
     }
 
     public function edit(string $id, $msg = '')
     {
         $supplier = SupplierModel::find($id);
-        return view('app.supplier.store',[
+        return view('app.supplier.store', [
             'fornecedor' => $supplier,
             'msg' => $msg
         ]);
@@ -83,5 +84,4 @@ class SupplierController extends Controller
         $supplier = SupplierModel::find($id)->delete();
         return redirect()->route('app.supplier');
     }
-
 }

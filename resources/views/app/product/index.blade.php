@@ -19,6 +19,7 @@
                         <tr>
                             <th>Nome</th>
                             <th>Descrição</th>
+                            <th>Fornecedor</th>
                             <th>Peso</th>
                             <th>Unidade ID</th>
                             <th>Comprimento</th>
@@ -34,6 +35,7 @@
                             <tr>
                                 <td>{{ $product->nome }}</td>
                                 <td>{{ $product->descricao }}</td>
+                                <td>{{ $product->supplier->nome }}</td>
                                 <td>{{ $product->peso }}</td>
                                 <td>{{ $product->unidade_id }}</td>
                                 <td>{{ $product->productDetail->comprimento ?? '' }}</td>
@@ -50,6 +52,16 @@
                                     </form>
                                 </td>
                                 <td><a href="{{ route('product.edit', ['product' => $product->id]) }}">Editar</a></td>
+                            </tr>
+                            <tr>
+                                <td colspan="12">
+                                    <p>Pedidos</p>
+                                    @foreach ($product->order as $order)
+                                        <a href="{{ route('order-product.create', ['order' => $order->id]) }}">
+                                            Pedido: {{ $order->id }},
+                                        </a>
+                                    @endforeach
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -15,21 +15,21 @@ class LoginController extends Controller
     {
         $erro = '';
 
-        if ($request->get('erro') == 1){
+        if ($request->get('erro') == 1) {
             $erro = 'Usuário e ou senha não existe';
         }
 
-        if ($request->get('erro') == 2){
+        if ($request->get('erro') == 2) {
             $erro = 'Necessário realiza login para ter acesso a página';
         }
 
-        return view('site.login',['title'=>'Login','erro'=>$erro]);
+        return view('site.login', ['title' => 'Login', 'erro' => $erro]);
     }
 
     public function authetication(Request $request)
     {
         $regras = [
-            'usuario'=>'email',
+            'usuario' => 'email',
             'senha' => 'required'
         ];
 
@@ -44,20 +44,19 @@ class LoginController extends Controller
         $password = $request->get('senha');
 
         $user = new User();
-        $existe = $user->where('email',$email)
-            ->where('password',$password)
+        $existe = $user->where('email', $email)
+            ->where('password', $password)
             ->get()
             ->first();
 
-        if (isset($existe->name)){
+        if (isset($existe->name)) {
             session_start();
             $_SESSION['name'] = $existe->name;
             $_SESSION['email'] = $existe->email;
-            return redirect()->route('app.customer');
-        }else{
-            return redirect()->route('main.login',['erro'=> 1]);
+            return redirect()->route('app.home');
+        } else {
+            return redirect()->route('main.login', ['erro' => 1]);
         }
-
     }
 
     public function logout()
@@ -65,5 +64,4 @@ class LoginController extends Controller
         session_destroy();
         return redirect()->route('main.login');
     }
-
 }

@@ -2,17 +2,18 @@
 
 use App\Http\Controllers\{
     AboutController,
+    ClientController,
     ContactController,
-    CustomerController,
     HomeController,
     LoginController,
     MainController,
+    OrderController,
+    OrderProductController,
     ProductController,
     ProductDetailController,
     SupplierController
 };
 
-use App\Http\Middleware\LogAcessoMiddleware;
 use Illuminate\Support\Facades\Route;
 /*
 Route::middleware(LogAcessoMiddleware::class)
@@ -38,7 +39,6 @@ Route::middleware('authetication:default,profile')
 
         Route::get('/home', [HomeController::class, 'index'])->name('app.home');
         Route::get('/logout', [LoginController::class, 'logout'])->name('app.logout');
-        Route::get('/customer', [CustomerController::class, 'index'])->name('app.customer');
 
         // Fornecedores
         Route::get('/supplier', [SupplierController::class, 'index'])->name('app.supplier');
@@ -54,6 +54,21 @@ Route::middleware('authetication:default,profile')
 
         // Produtos detalhes
         Route::resource('/product-detail', ProductDetailController::class);
+
+        // Clientes
+        Route::resource('/client', ClientController::class);
+
+        // Pedidos
+        Route::resource('/order', OrderController::class);
+
+        // Produto dos pedidos
+        //Route::resource('/order-product', OrderProductController::class);
+        Route::prefix('order-product')->group(function () {
+            Route::get('/create/{order}', [OrderProductController::class, 'create'])->name('order-product.create');
+            Route::post('/store/{order}', [OrderProductController::class, 'store'])->name('order-product.store');
+            Route::delete('/destroy/{orderProduct}/{order_id}', [OrderProductController::class, 'destroy'])->name('order-product.destroy');
+            //Route::delete('/destroy/{order}/{product}', [OrderProductController::class, 'destroy'])->name('order-product.destroy');
+        });
     });
 
 Route::fallback(function () {

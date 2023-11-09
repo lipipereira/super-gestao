@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Product;
+use App\Models\SupplierModel;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -44,8 +45,9 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $suppliers = SupplierModel::all();
         $units = Unit::all();
-        return view('app.product.create', ['units' => $units]);
+        return view('app.product.create', ['units' => $units, 'suppliers' => $suppliers]);
     }
 
     /**
@@ -57,7 +59,8 @@ class ProductController extends Controller
             'nome' => 'required|min:3|max:40',
             'descricao' => 'required|min:3|max:2000',
             'peso' => 'required|integer',
-            'unidade_id' => 'exists:unidades,id'
+            'unidade_id' => 'exists:unidades,id',
+            'fornecedor_id' => 'exists:fornecedores,id'
         ];
 
         $feedback = [
@@ -67,11 +70,12 @@ class ProductController extends Controller
             'descricao.min' => 'O campo "Descrição" deve ter no mínimo 3 caracteres',
             'descricao.max' => 'O campo "Descrição" deve ter no máximo 2000 caracteres',
             'peso.integer' => 'O campo "Peso" dever ser um número inteiro',
-            'unidade_id.exists' => 'A unidade de medida informada não existe'
+            'unidade_id.exists' => 'A unidade de medida informada não existe',
+            'fornecedor_id.exists' => 'O fornecedor informada não existe'
         ];
         $request->validate($regras, $feedback);
 
-        Product::create($request->all());
+        Item::create($request->all());
 
         return redirect()->route('product.index');
     }
@@ -92,14 +96,19 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $units = Unit::all();
-        return view('app.product.edit', ['produto' => $product, 'unidades' => $units]);
+        $suppliers = SupplierModel::all();
+        return view('app.product.edit', [
+            'products' => $product,
+            'units' => $units,
+            'suppliers' => $suppliers
+        ]);
         //return view('app.product.create',['produto' => $product, 'unidades' => $units]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Item $product)
     {
         $product->update($request->all());
         return redirect()->route('product.show', ['product' => $product->id]);

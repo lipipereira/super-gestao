@@ -19,5 +19,8 @@ class SupplierModel extends Model
         'email'
     ];
 
-
+    public function products()
+    {
+        return $this->hasMany('App\Models\Item', 'fornecedor_id', 'id');
+    }
 }
